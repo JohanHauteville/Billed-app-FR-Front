@@ -24,7 +24,13 @@ export default class NewBill {
     const email = JSON.parse(localStorage.getItem("user")).email
     formData.append('file', file)
     formData.append('email', email)
-
+    // console.log(file);
+    // if(file.type ==="image/png"||file.type ==="image/jpg"||file.type ==="image/jpeg"){
+    //   console.log(`Le format est bon : ${file.type}`);
+    // } else {
+    //   console.log(`Le format n'est pas bon: ${file.type}`);
+    //   return
+    // }
     this.store
       .bills()
       .create({
