@@ -61,3 +61,10 @@ textarea:focus, input:focus, select:focus {
 *[placeholder] {
   color: #0E5AE5 !important;
 }
+
+.wrong-file::after{
+  content:'Fichiers acceptés: jpg, jpeg, png';
+  display: block;
+  margin-top: 10px;
+  color: #ff0000;
+}
