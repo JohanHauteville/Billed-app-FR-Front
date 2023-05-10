@@ -145,6 +145,12 @@ export default class {
       this.counter ++
     }
 
+    // Supprime listeners de 'click' sur toute les cartes affichées
+    bills.forEach(bill => {
+      $(`#open-bill${bill.id}`).off('click')
+    })
+
+    // Ajoute listeners de 'click' sur toute les cartes affichées
     bills.forEach(bill => {
       $(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
     })

@@ -21,16 +21,17 @@ export default class NewBill {
     const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
     const filePath = e.target.value.split(/\\/g)
     const fileName = filePath[filePath.length-1]
-
-    let fileToSuppress = this.document.querySelector(`input[data-testid="file"]`)
-    let labelOfFile = fileToSuppress.previousElementSibling
+    // Ajout modif
+    let inputFile = this.document.querySelector(`input[data-testid="file"]`)
+    let labelOfFile = inputFile.previousElementSibling
     console.log(labelOfFile);
+    /*********************/
     if(file.type ==="image/png"||file.type ==="image/jpg"||file.type ==="image/jpeg"){
       labelOfFile.classList.remove("wrong-file")
       this.isWrongExtensionFile = false
     } else {
       labelOfFile.classList.add("wrong-file")
-      fileToSuppress.value =""
+      inputFile.value =""
       this.isWrongExtensionFile = true
     }
     const formData = new FormData()
