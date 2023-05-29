@@ -5,7 +5,7 @@
 import {screen, waitFor} from "@testing-library/dom"
 import BillsUI from "../views/BillsUI.js"
 import { bills } from "../fixtures/bills.js"
-import { ROUTES_PATH } from "../constants/routes.js";
+import { ROUTES, ROUTES_PATH } from "../constants/routes.js";
 import {localStorageMock} from "../__mocks__/localStorage.js";
 import containerBills from "../containers/Bills.js"
 import  mockedBills  from "../__mocks__/store.js"
@@ -54,7 +54,7 @@ describe("Given I am connected as an employee", ()=>{
       document, onNavigate, store: mockedBills, localStorage: window.localStorage
     })
     containerOfBills.handleClickNewBill = jest.fn()
-    //containerOfBills.onNavigate = jest.fn()
+  
 
     const buttonNewBill = document.querySelector(`button[data-testid="btn-new-bill"]`)
     expect(buttonNewBill).toBeDefined()
@@ -64,9 +64,11 @@ describe("Given I am connected as an employee", ()=>{
     // On attend à ce que lorsque l'on clic sur le bouton "NewBill", on soit redirigé...
     // ... vers la page NewBill.
     expect(containerOfBills.onNavigate).toHaveBeenCalledWith(ROUTES_PATH['NewBill'])
+
   })
 
   it("Should handle click on eye-icon", ()=>{
+    jQuery.fn.modal = () => {}
 
     const ArrayOfIconEye = document.querySelectorAll(`div[data-testid="icon-eye"]`)
     expect(ArrayOfIconEye).toBeDefined()
@@ -75,8 +77,6 @@ describe("Given I am connected as an employee", ()=>{
       document, onNavigate, store: mockedBills, localStorage
     })
     BillsContainer.handleClickIconEye = jest.fn()
-    
-    $('#modaleFile').modal = jest.fn()
 
     ArrayOfIconEye[0].click()
 
@@ -85,13 +85,31 @@ describe("Given I am connected as an employee", ()=>{
   })
 
   it("Should display Bills ", async ()=>{
- 
+    const onNavigate = (pathname) => {
+      document.body.innerHTML = ROUTES({ pathname })
+    }
 
-    let myClass = new containerBills({ document, onNavigate, bills, localStorage });
-
-    console.log(mockedBills.bills().list())
-    console.log(bills)
+    Object.defineProperty(window, 'localStorage', { value: localStorageMock })
+    window.localStorage.setItem('user', JSON.stringify({
+      type: 'Employee'
+    }))
+    
    
+    const store = {
+      bills: ( )=>{
+        return {
+          list: ()=>{
+            return new Promise(()=>bills)
+          }
+        };
+      }
+    }
+    let myCBills = new containerBills({ document, onNavigate,store, localStorage });
+    
+    const formattedBills = await myCBills.getBills()
+
+    console.log(formattedBills)
+    console.log("/+++++++++/")
 
 
   })
@@ -99,6 +117,7 @@ describe("Given I am connected as an employee", ()=>{
 })
 
 describe("Integration test when I am connected as an employee", () => {
+
   describe("When I navigate to Bills", ()=>{
     it("Should display Bills", async ()=>{
       localStorage.setItem("user", JSON.stringify({ type: "Admin", email: "a@a" }));

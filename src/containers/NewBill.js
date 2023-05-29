@@ -9,6 +9,7 @@ export default class NewBill {
     const formNewBill = this.document.querySelector(`form[data-testid="form-new-bill"]`)
     formNewBill.addEventListener("submit", this.handleSubmit)
     const file = this.document.querySelector(`input[data-testid="file"]`)
+    console.log(file.value)
     file.addEventListener("change", this.handleChangeFile)
     this.fileUrl = null
     this.fileName = null
@@ -24,7 +25,6 @@ export default class NewBill {
     // Ajout modif
     let inputFile = this.document.querySelector(`input[data-testid="file"]`)
     let labelOfFile = inputFile.previousElementSibling
-    console.log(labelOfFile);
     /*********************/
     if(file.type ==="image/png"||file.type ==="image/jpg"||file.type ==="image/jpeg"){
       labelOfFile.classList.remove("wrong-file")
