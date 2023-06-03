@@ -32,7 +32,7 @@ export default class {
   }
 
   getBills = () => {
-    // console.log(this.store);
+     //console.log(this.store);
     if (this.store) {
       return this.store
       .bills()
@@ -57,7 +57,9 @@ export default class {
               }
             }
           })
-          console.log(bills)
+          //console.log("============")
+
+          //console.log(bills)
           console.log('length', bills.length)
           //Promise.reject(new Error("Erreur 404"))
           

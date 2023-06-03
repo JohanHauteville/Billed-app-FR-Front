@@ -9,7 +9,7 @@ export default class NewBill {
     const formNewBill = this.document.querySelector(`form[data-testid="form-new-bill"]`)
     formNewBill.addEventListener("submit", this.handleSubmit)
     const file = this.document.querySelector(`input[data-testid="file"]`)
-    console.log(file.value)
+
     file.addEventListener("change", this.handleChangeFile)
     this.fileUrl = null
     this.fileName = null
@@ -38,7 +38,6 @@ export default class NewBill {
     const email = JSON.parse(localStorage.getItem("user")).email
     formData.append('file', file)
     formData.append('email', email)
-    console.log(file);
     
     if(this.isWrongExtensionFile===false){
       this.store
@@ -50,13 +49,13 @@ export default class NewBill {
           }
         })
         .then(({fileUrl, key}) => {
-          console.log(fileUrl)
-          console.log(key);
+          // console.log(fileUrl)
+          // console.log(key);
           this.billId = key
           this.fileUrl = fileUrl
           this.fileName = fileName
         }).catch(error => console.error(error))
-      console.log(this.store);
+      //console.log(this.store);
     }
   }
   handleSubmit = e => {
@@ -64,6 +63,8 @@ export default class NewBill {
     console.log('e.target.querySelector(`input[data-testid="datepicker"]`).value', e.target.querySelector(`input[data-testid="datepicker"]`).value)
     if(this.isWrongExtensionFile===false){
       const email = JSON.parse(localStorage.getItem("user")).email
+      // console.log(this.fileUrl);
+      // console.log(this.fileName);
       const bill = {
         email,
         type: e.target.querySelector(`select[data-testid="expense-type"]`).value,
@@ -77,6 +78,7 @@ export default class NewBill {
         fileName: this.fileName,
         status: 'pending'
       }
+      //console.log(bill);
       this.updateBill(bill)
       this.onNavigate(ROUTES_PATH['Bills'])
     }
