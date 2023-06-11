@@ -7,8 +7,6 @@ export default class {
     this.document = document
     this.onNavigate = onNavigate
     this.store = store
-    // console.log("/++++++++++/")
-    // console.log(store)
 
     const buttonNewBill = document.querySelector(`button[data-testid="btn-new-bill"]`)
     if (buttonNewBill) buttonNewBill.addEventListener('click', this.handleClickNewBill)
@@ -32,21 +30,24 @@ export default class {
   }
 
   getBills = () => {
-     //console.log(this.store);
     if (this.store) {
       return this.store
       .bills()
       .list()
       .then(snapshot => {
+        console.log("then...");
         const bills = snapshot
           .map(doc => {
             try {
+              console.log("passe dans le try");
               return {
                 ...doc,
                 date: formatDate(doc.date),
                 status: formatStatus(doc.status)
               }
             } catch(e) {
+              console.log("passe dans le catch");
+
               // if for some reason, corrupted data was introduced, we manage here failing formatDate function
               // log the error and return unformatted date in that case
               console.log(e,'for',doc)
@@ -57,14 +58,11 @@ export default class {
               }
             }
           })
-          //console.log("============")
-
-          //console.log(bills)
-          console.log('length', bills.length)
-          //Promise.reject(new Error("Erreur 404"))
+        
           
         return bills
       })
+
     }
   }
 }

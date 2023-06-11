@@ -259,6 +259,7 @@ describe("Given I am a user connected as Admin", () => {
     })
   describe("When an error occurs on API", () => {
     beforeEach(() => {
+      
       jest.spyOn(mockStore, "bills")
       Object.defineProperty(
           window,
@@ -273,9 +274,9 @@ describe("Given I am a user connected as Admin", () => {
       root.setAttribute("id", "root")
       document.body.appendChild(root)
       router()
+
     })
     test("fetches bills from an API and fails with 404 message error", async () => {
-
       mockStore.bills.mockImplementationOnce(() => {
         return {
           list : () =>  {
@@ -284,12 +285,13 @@ describe("Given I am a user connected as Admin", () => {
         }})
       window.onNavigate(ROUTES_PATH.Dashboard)
       await new Promise(process.nextTick);
+
       const message = await screen.getByText(/Erreur 404/)
       expect(message).toBeTruthy()
     })
 
     test("fetches messages from an API and fails with 500 message error", async () => {
-
+      //console.log(document.body.innerHTML);
       mockStore.bills.mockImplementationOnce(() => {
         return {
           list : () =>  {
