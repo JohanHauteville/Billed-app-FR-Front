@@ -14,7 +14,6 @@ import BILLS from "../containers/Bills"
 
 jest.mock("../app/store", () => mockedBills)
 
-
 describe("Given I am connected as an employee", () => {
   describe("When I am on Bills Page", () => {
 
@@ -49,6 +48,7 @@ describe("Given I am connected as an employee", () => {
 })
 
 describe("Given I am connected as an employee", () => {
+
   it("Should handle click on NewBill", () => {
 
     const onNavigate = jest.fn()
@@ -162,16 +162,21 @@ describe("Given I am connected as an employee", () => {
 describe("Integration test when I am connected as an employee", () => {
 
   describe("When I navigate to Bills", () => {
-    it("Should display Bills", async () => {
-      //document.body.innerHTML = ""
-      // console.log(document.body.innerHTML);
-      // localStorage.setItem("user", JSON.stringify({ type: "Employee", email: "a@a" }));
-      // const root = document.createElement("div")
-      // root.setAttribute("id", "root")
-      // document.body.append(root)
-      // router()
-      window.onNavigate(ROUTES_PATH.Dashboard)
-      // console.log(document.body.innerHTML);
+    it("Should display all mocked bills from API GET ", async () => {
+
+      document.body.innerHTML=''
+      localStorage.setItem("user", JSON.stringify({ type: "Employee", email: "a@a" }));
+
+      const root = document.createElement('div')
+      root.setAttribute('id','root')
+
+      document.body.appendChild(root)
+
+      router()
+
+      window.onNavigate(ROUTES_PATH.Bills)
+
+
       await waitFor(() => screen.getByText("Mes notes de frais"))
       const billsOne = await screen.getByText("test1")
       expect(billsOne).toBeTruthy()

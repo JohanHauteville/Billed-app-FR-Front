@@ -8,6 +8,7 @@ import { ROUTES_PATH } from '../constants/routes.js'
 import NewBillUI from "../views/NewBillUI.js"
 import NewBill from "../containers/NewBill.js"
 import mockedStore from "../__mocks__/store.js"
+import router from "../app/Router.js";
 
 
 
@@ -97,6 +98,17 @@ describe("Given I am connected as an employee", () => {
 
   describe("Integration test when I am on NewBill Page", ()=>{
     test("It should display all input's form",async () => {
+      document.body.innerHTML=''
+      localStorage.setItem("user", JSON.stringify({ type: "Employee", email: "a@a" }));
+
+      const root = document.createElement('div')
+      root.setAttribute('id','root')
+
+      document.body.appendChild(root)
+
+      router()
+
+      window.onNavigate(ROUTES_PATH.NewBill)
 
       await waitFor(() => screen.getByText("Envoyer une note de frais"))
 
@@ -134,6 +146,22 @@ describe("Given I am connected as an employee", () => {
 
       const sendButton = document.querySelector('button[id="btn-send-bill"]')
       expect(sendButton).toBeDefined()
+    })
+    test("It should display all input's form",async () => {
+      document.body.innerHTML=''
+      localStorage.setItem("user", JSON.stringify({ type: "Employee", email: "a@a" }));
+
+      const root = document.createElement('div')
+      root.setAttribute('id','root')
+
+      document.body.appendChild(root)
+
+      router()
+
+      window.onNavigate(ROUTES_PATH.NewBill)
+
+      await waitFor(() => screen.getByText("Envoyer une note de frais"))
+
     })
   })
 
