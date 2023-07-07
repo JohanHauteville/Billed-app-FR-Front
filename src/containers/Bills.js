@@ -35,19 +35,15 @@ export default class {
       .bills()
       .list()
       .then(snapshot => {
-        console.log("then...");
         const bills = snapshot
           .map(doc => {
             try {
-              console.log("passe dans le try");
               return {
                 ...doc,
                 date: formatDate(doc.date),
                 status: formatStatus(doc.status)
               }
             } catch(e) {
-              console.log("passe dans le catch");
-
               // if for some reason, corrupted data was introduced, we manage here failing formatDate function
               // log the error and return unformatted date in that case
               console.log(e,'for',doc)

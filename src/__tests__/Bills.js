@@ -42,8 +42,6 @@ describe("Given I am connected as an employee", () => {
       expect(dates).toEqual(datesSorted)
     })
 
-
-
   })
 })
 
@@ -176,7 +174,7 @@ describe("Integration test when I am connected as an employee", () => {
 
       window.onNavigate(ROUTES_PATH.Bills)
 
-
+      // quand on navige sur la page des factures, elles doivent toutes être affichés
       await waitFor(() => screen.getByText("Mes notes de frais"))
       const billsOne = await screen.getByText("test1")
       expect(billsOne).toBeTruthy()
