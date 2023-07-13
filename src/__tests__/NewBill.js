@@ -58,6 +58,7 @@ describe("Given I am connected as an employee", () => {
       const onNavigate = jest.fn();
       const newBillClass = new NewBill({document, onNavigate , store: mockedStore , localStorage})
 
+      //Après avoir chargé la page on charge un fichier dont l'extension ne correspond pas au format attendu.
       const imageInput = screen.getByTestId('file')
       const file = new File(["blob"], 'fichier.png', { type: 'unknown' })
       fireEvent.change(imageInput, {
@@ -66,6 +67,7 @@ describe("Given I am connected as an employee", () => {
         }
       })
 
+      // Onn s'attend à ce que la variable isWrongExtensionFile soit VRAI
       expect(newBillClass.isWrongExtensionFile).toBeTruthy()
     })
     test("Then HandleSubmit should redirect correctly",  () => {
@@ -85,6 +87,7 @@ describe("Given I am connected as an employee", () => {
       // Effectue une action qui déclenche l'événement de soumission
       form.submit();
 
+      // On vérifie que la méthode handleSubmitTest aie bien été appellée et que la page Bills aie bien été chargée
       expect(handleSubmitTest).toHaveBeenCalled()
       expect(newBillClass.onNavigate).toHaveBeenCalledWith(ROUTES_PATH['Bills']);
     
@@ -197,6 +200,7 @@ describe("Given I am connected as an employee", () => {
       })
     })
   })
+  
   describe("When an error occurs on API", () => {
     
     test("create bill from an API and fails with 404 message error", async () => {

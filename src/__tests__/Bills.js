@@ -50,12 +50,10 @@ describe("Given I am connected as an employee", () => {
   it("Should handle click on NewBill", () => {
 
     const onNavigate = jest.fn()
-
     const containerOfBills = new containerBills({
       document, onNavigate, store: mockedBills, localStorage: window.localStorage
     })
     containerOfBills.handleClickNewBill = jest.fn()
-
 
     const buttonNewBill = document.querySelector(`button[data-testid="btn-new-bill"]`)
     expect(buttonNewBill).toBeDefined()
@@ -79,8 +77,10 @@ describe("Given I am connected as an employee", () => {
     })
     BillsContainer.handleClickIconEye = jest.fn()
 
+    // On simule un clic sur le premier icone Oeil
     ArrayOfIconEye[0].click()
 
+    // on s'attend à ce que la méthode affichant la modale soit appellée
     expect(BillsContainer.handleClickIconEye).toHaveBeenCalled();
 
   })
@@ -149,9 +149,13 @@ describe("Given I am connected as an employee", () => {
     }
     ]
 
+
     let myCBills = new containerBills({ document, onNavigate, store: mockedBills, localStorage });
+    
+    // on utilise la méthode permettant de récupérer les Bills
     const formatedBills = await myCBills.getBills()
   
+    // on compare les deux listes de Bills
     expect(formatedBills).toStrictEqual(billToCompare)
   })
 
